@@ -4,21 +4,10 @@
 import Day from "../day";
 
 export class Day1 implements Day {
-  part1(input: string): string {
-    return input.split("\n")
-      .map(line => line.replace(/[^0-9]/g, ""))
-      .reduce((acc, line) => {
-        if (!line.length) {
-          return acc;
-        }
-        if (line.length === 1) {
-          return acc + Number(line.repeat(2));
-        }
-        return acc + Number(line[0] + line[line.length - 1]);
-      }, 0)
-      .toString();
+  part1(input: string) {
+    return this.syphon(input.split("\n").map(line => line.replace(/[^0-9]/g, "")));
   }
-  part2(input: string): string {
+  part2(input: string) {
     const relations: Record<string, number> = {
       "one": 1,
       "two": 2,
@@ -30,7 +19,7 @@ export class Day1 implements Day {
       "eight": 8,
       "nine": 9,
     };
-    return input.split("\n")
+    return this.syphon(input.split("\n")
       .map(line => {
         const split = line.split("");
         const indices: [number, number][] = [];
@@ -45,7 +34,11 @@ export class Day1 implements Day {
           });
         indices.forEach(([i, val]) => split[i] = val.toString());
         return split.join("").replace(/[^0-9]/g, "");
-      })
+      }));
+  }
+
+  private syphon(input: string[]) {
+    return input
       .reduce((acc, line) => {
         if (line.length === 1) {
           return acc + Number(line.repeat(2));
