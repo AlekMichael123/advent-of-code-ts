@@ -1,16 +1,20 @@
 {
   "devDependencies": {
+    "@types/node": "20.8.2",
     "gts": "^5.2.0",
-    "typescript": "~5.2.0",
-    "@types/node": "20.8.2"
+    "typescript": "~5.2.0"
   },
   "scripts": {
     "lint": "gts lint",
     "clean": "gts clean",
-    "compile": "tsc",
+    "compile": "tsc && node build\\src\\index.js",
+    "dev": "nodemon --watch src/ --exec \"npm run compile\" --verbose -e ts",
     "fix": "gts fix",
     "prepare": "npm.cmd run compile",
     "pretest": "npm.cmd run compile",
     "posttest": "npm.cmd run lint"
+  },
+  "dependencies": {
+    "nodemon": "^3.0.2"
   }
 }

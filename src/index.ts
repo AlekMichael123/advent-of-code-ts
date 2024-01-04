@@ -1,13 +1,17 @@
 import * as fs from "fs";
 import * as path from "path";
+import * as AOC from "./aoc";
 
+main();
 
-export function main() {
+function main() {
   const input = getInput();
-  console.log(input);
+  const day = new AOC.AOC2023.Day1();
+  day.part1(input);
+  day.part2(input);
 }
 
 function getInput() {
-  const inputPath = path.join(__dirname, "input.txt");
+  const inputPath = path.join(__dirname, "\\..\\..\\input.txt");
   return fs.readFileSync(inputPath).toString();
 }
