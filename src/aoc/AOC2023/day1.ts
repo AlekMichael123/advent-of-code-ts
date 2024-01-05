@@ -27,7 +27,7 @@ export class Day1 implements Day {
         Object.keys(relations)
           .forEach(key => {
             let i = line.indexOf(key);
-            while (i !== -1 && i < line.length) {
+            while (i !== -1) {
               indices.push([i, relations[key]]);
               i = line.indexOf(key, i + 1);
             }
