@@ -6,7 +6,7 @@ main();
 
 function main() {
   const input = getInput();
-  const day = new AOC.AOC2023.Day2();
+  const day = new AOC.AOC2023.Day3();
   console.log("Part 1");
   console.log(day.part1(input));
   console.log("Part 2");
