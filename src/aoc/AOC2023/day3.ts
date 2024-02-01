@@ -29,7 +29,21 @@ export class Day3 implements Day {
     return sum.toString();
   }
   part2(input: string): string {
-    return "";
+    const grid = input.split("\n");
+    let sum = 0;
+
+    grid.forEach((row, i) => {
+      row.split("").forEach((cell, j) => {
+        if (cell === "*") {
+          const adjacentPartNumbers = this.getPartNumbersAdjacent(i, j, grid.map(row => row.split("")));
+          if (adjacentPartNumbers.length === 2) {
+            sum += adjacentPartNumbers[0] * adjacentPartNumbers[1];
+          }
+        }
+      });
+    });
+
+    return sum.toString();
   }
   private readonly numbers = "0123456789";
   private readonly directions = [
@@ -47,5 +61,29 @@ export class Day3 implements Day {
         !this.numbers.includes(grid[_i][_j])
       );
     });
-  
+  private getPartNumbersAdjacent = (i: number, j: number, grid: string[][]) =>
+    this.directions.reduce<number[]>((partNumbers, [iOff, jOff]) => {
+      const _i = i + iOff, _j = j + jOff;
+      if (
+        -1 < _i && _i < grid.length &&
+        -1 < _j && _j < grid[_i].length &&
+        grid[_i][_j] !== " " &&
+        !this.numbers.includes(grid[_i][_j])
+      ) return partNumbers;
+      let partNumber = [grid[_i][_j]];
+      grid[_i][_j] = " ";
+      let left = _j - 1, right = _j + 1
+      while (-1 < left && this.numbers.includes(grid[_i][left])) {
+        partNumber = [grid[_i][left], ...partNumber];
+        grid[_i][left--] = " ";
+      }
+      while (right < grid[_i].length && this.numbers.includes(grid[_i][right])) {
+        partNumber = [...partNumber, grid[_i][right]];
+        grid[_i][right++];
+      }
+      if (Number(partNumber.join("")))
+        return [...partNumbers, Number(partNumber.join(""))];
+      else
+        return partNumbers;
+    }, []);
 }
